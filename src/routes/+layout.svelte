@@ -2,6 +2,11 @@
   import "./layout.css";
   import favicon from "$lib/assets/favicon.svg";
   import Infobox from "$lib/Infobox.svelte";
+  import {
+    getActiveWallet,
+    isPersistenceError,
+    isPersistenceLoading,
+  } from "$lib/persistence.svelte";
 
   let { children } = $props();
 </script>
@@ -16,4 +21,14 @@
   <Infobox />
 </header>
 
-{@render children()}
+<main>
+  {#if isPersistenceLoading()}
+    <div>Loading...</div>
+  {:else if isPersistenceError()}
+    <div>Error!</div>
+  {:else}
+    <h2>{getActiveWallet().name}</h2>
+
+    {@render children()}
+  {/if}
+</main>
