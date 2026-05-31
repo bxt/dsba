@@ -1,26 +1,12 @@
-# sv
+# DSBA
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+**Damn Simple Budget App**
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-pnpm dlx sv@0.15.3 create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" playwright tailwindcss="plugins:none" --install pnpm dsba
-```
+At some place I just had a wallet with cash. Keeping track of your expenses was simple: On one glace you could see how many bills you have left, and when they were gone, they were gone. Nowadays, things are more complicated: Multiple bank accounts, credit cards, sharing a meal with friends, Amazon vouchers, PayPal balance. One solution to this problem is to connect all those with a central service that tracks your expenses and have an AI classify those into budgets, and there are some great solutions out there. To me, this feels too complex and data-hungry. Instead, I just want a digital version of a wallet, that just keeps track of how much money I have left, and for this I am willing to enter my expenses manually. This is what DSBA (Damn Simple Budget App) was made for.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've checked out the project and installed dependencies with `pnpm install`, start a development server:
 
 ```sh
 npm run dev
@@ -38,5 +24,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
