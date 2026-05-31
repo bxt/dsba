@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies
         run: pnpm i
 
-      - name: Install dependencies
-        run: pnpm run playwright install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
 
       - name: Run svelte kit check
         run: pnpm run check
