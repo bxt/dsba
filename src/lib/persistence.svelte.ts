@@ -127,6 +127,11 @@ export function getActiveWallet(): Wallet {
   return findWallet(getPersistence().activeWallet);
 }
 
+export function setActiveWallet(id: string): void {
+  const wallet = findWallet(id);
+  getPersistence().activeWallet = wallet.id;
+}
+
 export function editActiveWallet({
   name,
   balance,

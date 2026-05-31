@@ -44,6 +44,11 @@
   </p>
   <button type="submit">save</button>
   {#if isWalletDeletable()}
-    <button onclick={deleteActiveWallet}>delete</button>
+    <button
+      onclick={() => {
+        deleteActiveWallet();
+        goto(resolve("/"));
+      }}>delete</button
+    >
   {/if}
 </form>
