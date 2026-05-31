@@ -17,6 +17,19 @@ pnpm run dev
 pnpm run dev -- --open
 ```
 
+To run the tests, prepare by doing `npx playwright install` and then run those commands:
+
+```sh
+pnpm run test:unit
+pnpm run test:e2e --ui
+```
+
+To run the linting and formatting (if not done by the editor anyways) run:
+
+```sh
+pnpm run lint
+```
+
 ## Building
 
 To create a production version of your app:
