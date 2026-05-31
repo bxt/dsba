@@ -7,6 +7,7 @@
     isPersistenceError,
     isPersistenceLoading,
   } from "$lib/persistence.svelte";
+  import { resolve } from "$app/paths";
 
   let { children } = $props();
 </script>
@@ -28,6 +29,8 @@
     <div>Error!</div>
   {:else}
     <h2>{getActiveWallet().name}</h2>
+
+    <a href={resolve("/edit")}>edit</a>
 
     {@render children()}
   {/if}
