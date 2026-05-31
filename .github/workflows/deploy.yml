@@ -37,6 +37,9 @@ jobs:
       - name: Run unit tests
         run: pnpm run test:unit
 
+      - name: Run e2e tests
+        run: pnpm run test:e2e
+
       - name: Build
         env:
           BASE_PATH: "/${{ github.event.repository.name }}"
