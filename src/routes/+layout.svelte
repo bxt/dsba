@@ -30,6 +30,7 @@
   {:else}
     <h2>{getActiveWallet().name}</h2>
 
+    <a href={resolve("/add")}>add</a>
     <a href={resolve("/edit")}>edit</a>
 
     {@render children()}

@@ -1,11 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import {
-    deleteActiveWallet,
-    editActiveWallet,
-    getActiveWallet,
-    isWalletDeletable,
-  } from "$lib/persistence.svelte";
+  import { createNewAndActiveWallet } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
 </script>
 
@@ -20,30 +15,22 @@
     if (!balanceRaw) throw new Error("name empty?");
     const balance = parseFloat(balanceRaw.toString());
 
-    editActiveWallet({ name, balance });
+    createNewAndActiveWallet({ name, balance });
     goto(resolve("/"));
   }}
 >
   <p>
     <label>
       <span>Name:</span>
-      <input name="name" required value={getActiveWallet().name} />
+      <input name="name" required />
     </label>
   </p>
   <p>
     <label>
       <span>Balance:</span>
-      <input
-        name="balance"
-        type="number"
-        step="0.01"
-        required
-        value={getActiveWallet().balance}
-      />
+      <input name="balance" type="number" step="0.01" value={0} required />
     </label>&thinsp;€
   </p>
   <button type="submit">save</button>
-  {#if isWalletDeletable()}
-    <button onclick={deleteActiveWallet}>delete</button>
-  {/if}
+  <a href={resolve("/")}>cancel</a>
 </form>

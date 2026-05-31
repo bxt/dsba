@@ -113,6 +113,9 @@ export function setOnboardingCompleted(): void {
 export function getWallets(): Wallet[] {
   return getPersistence().wallets;
 }
+export function isWalletDeletable(): boolean {
+  return getPersistence().wallets.length > 1;
+}
 
 export function findWallet(walletId: string): Wallet {
   const wallet = getPersistence().wallets.find(({ id }) => id === walletId);
@@ -134,6 +137,26 @@ export function editActiveWallet({
   const wallet = findWallet(getPersistence().activeWallet);
   wallet.name = name;
   wallet.balance = balance;
+}
+
+export function createNewAndActiveWallet({
+  name,
+  balance,
+}: {
+  name: string;
+  balance: number;
+}): void {
+  const id = crypto.randomUUID();
+  const wallet: Wallet = { id, balance, name, expenses: [] };
+  getPersistence().wallets.push(wallet);
+  getPersistence().activeWallet = wallet.id;
+}
+
+export function deleteActiveWallet(): void {
+  getPersistence().wallets = getPersistence().wallets.filter(
+    ({ id }) => id !== getPersistence().activeWallet,
+  );
+  getPersistence().activeWallet = getPersistence().wallets[0].id;
 }
 
 export function addExpense(amount: number): void {
