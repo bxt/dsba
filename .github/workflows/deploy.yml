@@ -25,7 +25,16 @@ jobs:
       - name: Install dependencies
         run: pnpm i
 
-      - name: build
+      - name: Run svelte kit check
+        run: pnpm run check
+
+      - name: Run linters
+        run: pnpm run lint
+
+      - name: Run unit tests
+        run: pnpm run test:unit
+
+      - name: Build
         env:
           BASE_PATH: "/${{ github.event.repository.name }}"
         run: |
