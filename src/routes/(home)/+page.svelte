@@ -1,5 +1,6 @@
 <script lang="ts">
   import Amount from "$lib/Amount.svelte";
+  import NumberInput from "$lib/NumberInput.svelte";
   import { getActiveWallet, addExpense } from "$lib/persistence.svelte";
   import { slide } from "svelte/transition";
 
@@ -24,10 +25,11 @@
   <label class="flex flex-1 items-center gap-1">
     <span class="text-gray-500">Amount:</span>
     <span class="flex flex-1 rounded-lg border px-2 text-2xl">
-      <input
-        bind:value={amount}
-        inputmode="decimal"
+      <NumberInput
         class="w-0 flex-1 text-right"
+        name="balance"
+        required
+        bind:value={amount}
       />
       <span class=" text-gray-500">&thinsp;€</span>
     </span>
@@ -35,6 +37,7 @@
   <div class="flex flex-1 items-center gap-1">
     <button
       onclick={() => {
+        if (isNaN(amount)) return;
         addExpense(-amount);
       }}
       class="rounded-lg border px-2 text-2xl"
@@ -43,6 +46,7 @@
     </button>
     <button
       onclick={() => {
+        if (isNaN(amount)) return;
         addExpense(amount);
       }}
       class="rounded-lg border px-2"

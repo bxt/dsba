@@ -2,6 +2,9 @@
   import { goto } from "$app/navigation";
   import { createNewAndActiveWallet } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
+  import NumberInput from "$lib/NumberInput.svelte";
+
+  let balance = $state(0);
 </script>
 
 <form
@@ -11,9 +14,7 @@
     const data = new FormData(event.currentTarget, event.submitter);
     const name = data.get("name")?.toString();
     if (!name) throw new Error("name empty?");
-    const balanceRaw = data.get("balance");
-    if (!balanceRaw) throw new Error("name empty?");
-    const balance = parseFloat(balanceRaw.toString());
+    if (isNaN(balance)) throw new Error("balance empty?");
 
     createNewAndActiveWallet({ name, balance });
     goto(resolve("/"));
@@ -28,7 +29,7 @@
   <p>
     <label>
       <span>Balance:</span>
-      <input name="balance" type="number" step="0.01" value={0} required />
+      <NumberInput name="balance" required bind:value={balance} />
     </label>&thinsp;€
   </p>
   <button type="submit">save</button>

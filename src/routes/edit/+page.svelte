@@ -7,6 +7,9 @@
     isWalletDeletable,
   } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
+  import NumberInput from "$lib/NumberInput.svelte";
+
+  let balance = $state(getActiveWallet().balance);
 </script>
 
 <form
@@ -16,9 +19,7 @@
     const data = new FormData(event.currentTarget, event.submitter);
     const name = data.get("name")?.toString();
     if (!name) throw new Error("name empty?");
-    const balanceRaw = data.get("balance");
-    if (!balanceRaw) throw new Error("name empty?");
-    const balance = parseFloat(balanceRaw.toString());
+    if (isNaN(balance)) throw new Error("balance empty?");
 
     editActiveWallet({ name, balance });
     goto(resolve("/"));
@@ -33,14 +34,8 @@
   <p>
     <label>
       <span>Balance:</span>
-      <input
-        name="balance"
-        type="number"
-        step="0.01"
-        required
-        value={getActiveWallet().balance}
-      />
-    </label>&thinsp;€
+      <NumberInput name="balance" required bind:value={balance} />
+    </label>&thinsp;€ ({balance})
   </p>
   <button type="submit">save</button>
   {#if isWalletDeletable()}

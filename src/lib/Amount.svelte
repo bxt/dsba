@@ -9,5 +9,5 @@
 </script>
 
 <span class={`${clx} text-right ${value < 0 ? "text-red-700" : ""}`}>
-  {value > 0 ? "+" : ""}{currencyFormat.format(value)}
+  {value > 0 ? "+" : ""}{currencyFormat.format(value / 100)}
 </span>

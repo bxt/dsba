@@ -1,7 +1,7 @@
 import { SvelteDate } from "svelte/reactivity";
 
 const localStorageKey = "DSBA-data";
-const localStorageCurrentVersion = 1;
+const localStorageCurrentVersion = 2;
 
 export type Expense = {
   id: string;
@@ -59,10 +59,13 @@ function loadPersistenceResult(): PersistenceResult {
       };
       return { loading: false, error: false, data };
     }
-    const data = JSON.parse(rawContents);
+    let data = JSON.parse(rawContents);
 
     if (!data.version) throw new Error("version missing :/");
-    if (data.version !== 1) throw new Error("version not supported");
+    if (data.version === 1) data = migrateV1toV2(data);
+    if (data.version !== localStorageCurrentVersion) {
+      throw new Error("version not supported");
+    }
 
     return { loading: false, error: false, data };
   } catch (error) {
@@ -172,4 +175,20 @@ export function addExpense(amount: number): void {
     date: new SvelteDate().toISOString(),
   });
   wallet.balance += amount;
+}
+
+function migrateV1toV2(data: Persistence): Persistence {
+  const toCents = (input: number) => Math.round(input * 100);
+  return {
+    ...data,
+    version: 2,
+    wallets: data.wallets.map((wallet) => ({
+      ...wallet,
+      balance: toCents(wallet.balance),
+      expenses: wallet.expenses.map((expense) => ({
+        ...expense,
+        amount: toCents(expense.amount),
+      })),
+    })),
+  };
 }
