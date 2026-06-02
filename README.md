@@ -34,6 +34,12 @@ To run the linting and formatting (if not done by the editor anyways) run:
 pnpm run lint
 ```
 
+To run all the checks:
+
+```sh
+pnpm run "/^test:.*|^lint$|^build$|^check$/"
+```
+
 ## Building
 
 To create a production version of your app:
