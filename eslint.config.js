@@ -38,7 +38,7 @@ export default defineConfig(
   },
   {
     rules: {
-      "svelte/block-lang": ["error", { script: ["ts"] }],
+      "svelte/block-lang": ["error", { script: "ts" }],
     },
   },
 );
