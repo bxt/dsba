@@ -1,11 +1,8 @@
 <script lang="ts">
+  import Amount from "$lib/Amount.svelte";
   import { getActiveWallet, addExpense } from "$lib/persistence.svelte";
   import { slide } from "svelte/transition";
 
-  const currencyFormat = new Intl.NumberFormat("de", {
-    style: "currency",
-    currency: "EUR",
-  });
   const relativeTimeFormatLong = new Intl.RelativeTimeFormat("de", {
     style: "long",
   });
@@ -19,12 +16,7 @@
 <div
   class="m-auto mt-10 flex w-2/3 items-baseline gap-2 border border-gray-300 py-5"
 >
-  <span
-    title="current balance"
-    class={`flex-1 text-right text-2xl ${getActiveWallet().balance < 0 ? "text-red-700" : ""}`}
-  >
-    {currencyFormat.format(getActiveWallet().balance)}
-  </span>
+  <Amount value={getActiveWallet().balance} class="flex-1 text-2xl" />
   <span class="flex-1 text-gray-500">current balance</span>
 </div>
 
@@ -65,11 +57,7 @@
       (Date.parse(expense.date) - +new Date()) / 1000 / 60 / 60,
     )}
     <li transition:slide class="flex items-baseline gap-2">
-      <span
-        class={`flex-1 text-right text-2xl ${expense.amount < 0 ? "text-red-700" : ""}`}
-      >
-        {currencyFormat.format(expense.amount)}
-      </span>
+      <Amount value={expense.amount} class="flex-1 text-2xl" />
       <span
         class="flex-1 text-gray-500"
         title={relativeTimeFormatLong.format(hoursAgo, "hour")}
