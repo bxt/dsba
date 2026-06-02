@@ -24,7 +24,9 @@
 <form class="flex gap-2 py-3 pl-4">
   <label class="flex flex-1 items-center gap-1">
     <span class="text-gray-500">Amount:</span>
-    <span class="flex flex-1 rounded-lg border px-2 text-2xl">
+    <span
+      class="flex flex-1 rounded-lg border px-2 text-2xl has-aria-invalid:border-red-500"
+    >
       <NumberInput class="w-0 flex-1 text-right" required bind:value={amount} />
       <span class=" text-gray-500">&thinsp;€</span>
     </span>
@@ -32,19 +34,19 @@
   <div class="flex flex-1 items-center gap-1">
     <button
       onclick={() => {
-        if (isNaN(amount)) return;
         addExpense(-amount);
       }}
-      class="rounded-lg border px-2 text-2xl"
+      disabled={isNaN(amount)}
+      class="rounded-lg border px-2 text-2xl disabled:bg-gray-300"
     >
       Subtract
     </button>
     <button
       onclick={() => {
-        if (isNaN(amount)) return;
         addExpense(amount);
       }}
-      class="rounded-lg border px-2"
+      disabled={isNaN(amount)}
+      class="rounded-lg border px-2 disabled:bg-gray-300"
     >
       Add
     </button>
