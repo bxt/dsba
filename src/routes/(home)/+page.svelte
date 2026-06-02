@@ -2,14 +2,8 @@
   import Amount from "$lib/Amount.svelte";
   import NumberInput from "$lib/NumberInput/NumberInput.svelte";
   import { getActiveWallet, addExpense } from "$lib/persistence.svelte";
+  import RelativeTime from "$lib/RelativeTime/RelativeTime.svelte";
   import { slide } from "svelte/transition";
-
-  const relativeTimeFormatLong = new Intl.RelativeTimeFormat("de", {
-    style: "long",
-  });
-  const relativeTimeFormat = new Intl.RelativeTimeFormat("de", {
-    style: "narrow",
-  });
 
   let amount = $state(0);
 </script>
@@ -54,17 +48,9 @@
 </form>
 <ul class="flex flex-col gap-1">
   {#each getActiveWallet().expenses.toReversed() as expense (expense.id)}
-    {@const hoursAgo = Math.round(
-      (Date.parse(expense.date) - +new Date()) / 1000 / 60 / 60,
-    )}
     <li transition:slide class="flex items-baseline gap-2">
       <Amount value={expense.amount} class="flex-1 text-2xl" />
-      <span
-        class="flex-1 text-gray-500"
-        title={relativeTimeFormatLong.format(hoursAgo, "hour")}
-      >
-        {relativeTimeFormat.format(hoursAgo, "hour")}
-      </span>
+      <RelativeTime date={expense.date} class="flex-1 text-gray-500" />
     </li>
   {/each}
 </ul>
