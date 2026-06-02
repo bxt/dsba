@@ -22,6 +22,9 @@ describe("centsToString", () => {
     expect(centsToString(200)).toBe("2");
     expect(centsToString(1200)).toBe("12");
   });
+  it("turns NaN into empty string", () => {
+    expect(centsToString(NaN)).toBe("");
+  });
 });
 
 describe("stringToCents", () => {
@@ -61,11 +64,11 @@ describe("stringToCents", () => {
       expect(stringToCents(`${sign},1`)).toBe(signInt * 10);
     });
     it("turns empty and invalid values into NaN", () => {
-      expect(stringToCents(`${sign}`)).toBe(signInt * NaN);
-      expect(stringToCents(`${sign}+`)).toBe(signInt * NaN);
-      expect(stringToCents(`${sign},`)).toBe(signInt * NaN);
-      expect(stringToCents(`${sign},`)).toBe(signInt * NaN);
-      expect(stringToCents(`${sign}xxx`)).toBe(signInt * NaN);
+      expect(stringToCents(`${sign}`)).toBe(NaN);
+      expect(stringToCents(`${sign}+`)).toBe(NaN);
+      expect(stringToCents(`${sign},`)).toBe(NaN);
+      expect(stringToCents(`${sign},`)).toBe(NaN);
+      expect(stringToCents(`${sign}xxx`)).toBe(NaN);
     });
   });
   it("rounds if needed", () => {

@@ -1,5 +1,5 @@
 export function centsToString(input: number): string {
-  return (input / 100).toFixed(2).replace(".00", "");
+  return isNaN(input) ? "" : (input / 100).toFixed(2).replace(".00", "");
 }
 
 export function stringToCents(input: string): number {

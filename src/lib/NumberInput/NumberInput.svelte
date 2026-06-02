@@ -12,7 +12,14 @@
   }: { value: number; class?: string } & Omit<HTMLInputAttributes, "type"> =
     $props();
 
-  const initialValue = centsToString(value);
+  let initialValue = $state(centsToString(value));
+
+  $effect(() => {
+    const valuePresent = stringToCents(initialValue);
+    if (value !== valuePresent && !(isNaN(value) && isNaN(valuePresent))) {
+      initialValue = centsToString(value);
+    }
+  });
 </script>
 
 <input
@@ -25,10 +32,12 @@
     const { value: cleanedValue, caretPosition: newCaretPosition } =
       sanitizeValue({ value: valueRaw, caretPosition: oldCaretPosition });
 
-    if (cleanedValue !== value) {
+    if (cleanedValue !== valueRaw) {
       element.value = cleanedValue;
       element.setSelectionRange(newCaretPosition, newCaretPosition);
     }
+
+    initialValue = cleanedValue;
     value = stringToCents(cleanedValue);
   }}
   class={`text-right ${propsClass}`}
