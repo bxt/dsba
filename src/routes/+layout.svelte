@@ -33,8 +33,8 @@
 </svelte:head>
 
 <header class="flex justify-center">
-  <div class="flex w-full max-w-lg justify-between">
-    <h1 class="rounded-lg border text-2xl" aria-label="DSBA">D$BA</h1>
+  <div class="flex w-full max-w-lg justify-between p-2">
+    <h1 class="rounded-lg border px-1 text-2xl" aria-label="DSBA">D$BA</h1>
     <button
       onclick={toggle}
       aria-label="toggle infobox"
@@ -54,11 +54,11 @@
     <div>Error!</div>
   {:else}
     <nav
-      class="wallet-navigation m-auto -mbs-8 flex w-full max-w-lg ps-20 pe-10"
+      class="wallet-navigation m-auto -mbs-8 flex w-full max-w-lg ps-22 pe-12"
     >
       <div class="relative">
         <h2
-          class="border-s border-bs text-2xl"
+          class="border-s border-bs px-2 py-1"
           aria-current={page.url.pathname === "/"}
         >
           {getActiveWallet().name}
@@ -77,22 +77,20 @@
       </div>
       <input
         type="checkbox"
-        class="walltet-toggle-button size-8 border text-center"
+        class="wallet-toggle-button w-8 border px-2 text-center"
         aria-label="toggle list of wallets"
       />
 
       <a
         href={resolve("/add")}
         aria-current={page.url.pathname === "/add"}
-        class="flex h-8 items-center border border-s-0 px-2 aria-current:bg-red-700"
-        >add</a
+        class="border border-s-0 px-2 py-1 aria-current:bg-red-700">add</a
       >
       <span class="flex grow justify-end">
         <a
           href={resolve("/edit")}
           aria-current={page.url.pathname === "/edit"}
-          class="flex h-8 items-center border border-be-0 px-2 aria-current:bg-red-700"
-          >edit</a
+          class=" border border-be-0 px-2 py-1 aria-current:bg-red-700">edit</a
         >
       </span>
     </nav>
@@ -104,12 +102,11 @@
 </main>
 
 <style>
-  .walltet-toggle-button {
+  .wallet-toggle-button {
     appearance: none;
     cursor: pointer;
     font: inherit;
     color: inherit;
-    /* other styles */
 
     &::after {
       content: "v";
@@ -124,7 +121,7 @@
     display: none;
   }
 
-  .wallet-navigation:has(.walltet-toggle-button:checked) {
+  .wallet-navigation:has(.wallet-toggle-button:checked) {
     .wallet-dropdown {
       display: block;
     }

@@ -17,28 +17,35 @@
 </script>
 
 <div
-  title="current balance"
-  class={`mt-20 w-1/2 pe-1 text-right text-2xl ${getActiveWallet().balance < 0 ? "text-red-700" : ""}`}
+  class="m-auto mt-10 flex w-2/3 items-baseline gap-2 border border-gray-300 py-5"
 >
-  {currencyFormat.format(getActiveWallet().balance)}
+  <span
+    title="current balance"
+    class={`flex-1 text-right text-2xl ${getActiveWallet().balance < 0 ? "text-red-700" : ""}`}
+  >
+    {currencyFormat.format(getActiveWallet().balance)}
+  </span>
+  <span class="flex-1 text-gray-500">current balance</span>
 </div>
-<form class="flex gap-2 py-3">
+
+<form class="flex gap-2 py-3 pl-4">
   <label class="flex flex-1 items-center gap-1">
     <span class="text-gray-500">Amount:</span>
-    <input
-      type="number"
-      step="0.01"
-      bind:value={amount}
-      class="w-0 flex-1 rounded-lg border text-right text-2xl"
-    />
-    <span class="text-2xl text-gray-500">&thinsp;€</span>
+    <span class="flex flex-1 rounded-lg border px-2 text-2xl">
+      <input
+        bind:value={amount}
+        inputmode="decimal"
+        class="w-0 flex-1 text-right"
+      />
+      <span class=" text-gray-500">&thinsp;€</span>
+    </span>
   </label>
   <div class="flex flex-1 items-center gap-1">
     <button
       onclick={() => {
         addExpense(-amount);
       }}
-      class="rounded-lg border text-2xl"
+      class="rounded-lg border px-2 text-2xl"
     >
       Subtract
     </button>
@@ -46,7 +53,7 @@
       onclick={() => {
         addExpense(amount);
       }}
-      class="rounded-lg border"
+      class="rounded-lg border px-2"
     >
       Add
     </button>

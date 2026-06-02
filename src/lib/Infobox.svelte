@@ -4,7 +4,7 @@
 
 <aside
   transition:slide
-  class="m-auto flex w-full max-w-lg flex-col gap-1 pbe-8"
+  class="m-auto flex w-full max-w-lg flex-col gap-1 px-4 pbs-2 pbe-12"
 >
   <p>
     DSBA (meaning Damn Simple Budget App) makes keeping track of your expenses
