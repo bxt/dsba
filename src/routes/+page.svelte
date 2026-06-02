@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getActiveWallet, addExpense } from "$lib/persistence.svelte";
+  import { slide } from "svelte/transition";
 
   const currencyFormat = new Intl.NumberFormat("de", {
     style: "currency",
@@ -33,11 +34,11 @@
   }}>Add</button
 >
 <ul>
-  {#each getActiveWallet().expenses as expense (expense.id)}
+  {#each getActiveWallet().expenses.toReversed() as expense (expense.id)}
     {@const hoursAgo = Math.round(
       (Date.parse(expense.date) - +new Date()) / 1000 / 60 / 60,
     )}
-    <li>
+    <li transition:slide>
       <span>{currencyFormat.format(expense.amount)}</span>
       <span title={relativeTimeFormatLong.format(hoursAgo, "hour")}
         >{relativeTimeFormat.format(hoursAgo, "hour")}</span
