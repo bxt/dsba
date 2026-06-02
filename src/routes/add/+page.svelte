@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import { createNewAndActiveWallet } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
-  import NumberInput from "$lib/NumberInput.svelte";
+  import NumberInput from "$lib/NumberInput/NumberInput.svelte";
 
   let balance = $state(0);
 </script>

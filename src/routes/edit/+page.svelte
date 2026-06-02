@@ -7,7 +7,7 @@
     isWalletDeletable,
   } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
-  import NumberInput from "$lib/NumberInput.svelte";
+  import NumberInput from "$lib/NumberInput/NumberInput.svelte";
 
   let balance = $state(getActiveWallet().balance);
 </script>

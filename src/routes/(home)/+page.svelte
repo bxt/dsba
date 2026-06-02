@@ -1,6 +1,6 @@
 <script lang="ts">
   import Amount from "$lib/Amount.svelte";
-  import NumberInput from "$lib/NumberInput.svelte";
+  import NumberInput from "$lib/NumberInput/NumberInput.svelte";
   import { getActiveWallet, addExpense } from "$lib/persistence.svelte";
   import { slide } from "svelte/transition";
 
@@ -25,12 +25,7 @@
   <label class="flex flex-1 items-center gap-1">
     <span class="text-gray-500">Amount:</span>
     <span class="flex flex-1 rounded-lg border px-2 text-2xl">
-      <NumberInput
-        class="w-0 flex-1 text-right"
-        name="balance"
-        required
-        bind:value={amount}
-      />
+      <NumberInput class="w-0 flex-1 text-right" required bind:value={amount} />
       <span class=" text-gray-500">&thinsp;€</span>
     </span>
   </label>
