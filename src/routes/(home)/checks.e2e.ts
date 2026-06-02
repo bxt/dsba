@@ -31,14 +31,14 @@ test("close onboarding", async ({ page }) => {
 test("add expenses", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByTitle("current balance")).toHaveText("0,00 €");
+  await expect(page.getByText("0,00 € current balance")).toBeVisible();
   await page.getByLabel("Amount").fill("4.56");
   await page.getByRole("button", { name: "Subtract" }).click();
-  await expect(page.getByTitle("current balance")).toHaveText("-4,56 €");
+  await expect(page.getByText("-4,56 € current balance")).toBeVisible();
   await page.getByLabel("Amount").fill("13.36");
   await page.getByRole("button", { name: "Add" }).click();
-  await expect(page.getByTitle("current balance")).toHaveText("8,80 €");
+  await expect(page.getByText("+8,80 € current balance")).toBeVisible();
 
   await page.goto("/");
-  await expect(page.getByTitle("current balance")).toHaveText("8,80 €");
+  await expect(page.getByText("+8,80 € current balance")).toBeVisible();
 });
