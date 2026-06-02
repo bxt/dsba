@@ -7,43 +7,21 @@
     isWalletDeletable,
   } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
-  import NumberInput from "$lib/NumberInput/NumberInput.svelte";
-
-  let balance = $state(getActiveWallet().balance);
+  import WalletForm from "$lib/WalletForm.svelte";
 </script>
 
-<form
-  onsubmit={(event) => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget, event.submitter);
-    const name = data.get("name")?.toString();
-    if (!name) throw new Error("name empty?");
-    if (isNaN(balance)) throw new Error("balance empty?");
-
-    editActiveWallet({ name, balance });
-    goto(resolve("/"));
-  }}
+<WalletForm
+  action={editActiveWallet}
+  balance={getActiveWallet().balance}
+  name={getActiveWallet().name}
 >
-  <p>
-    <label>
-      <span>Name:</span>
-      <input name="name" required value={getActiveWallet().name} />
-    </label>
-  </p>
-  <p>
-    <label>
-      <span>Balance:</span>
-      <NumberInput name="balance" required bind:value={balance} />
-    </label>&thinsp;€ ({balance})
-  </p>
-  <button type="submit">save</button>
   {#if isWalletDeletable()}
     <button
+      class="inline-block rounded-lg border bg-red-300 px-2"
       onclick={() => {
         deleteActiveWallet();
         goto(resolve("/"));
       }}>delete</button
     >
   {/if}
-</form>
+</WalletForm>
