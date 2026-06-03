@@ -1,7 +1,7 @@
 <script lang="ts">
   import "./layout.css";
   import favicon from "$lib/assets/favicon.svg";
-  import Infobox from "$lib/Infobox.svelte";
+  import InfoBox from "$lib/InfoBox.svelte";
   import { page } from "$app/state";
   import {
     getActiveWallet,
@@ -37,14 +37,14 @@
     <h1 class="rounded-lg border px-1 text-2xl" aria-label="DSBA">D$BA</h1>
     <button
       onclick={toggle}
-      aria-label="toggle infobox"
+      aria-label="toggle info box"
       class="size-8 rounded-full border">i</button
     >
   </div>
 </header>
 
 {#if !isOnboardingCompleted() || isManuallyOpened}
-  <Infobox />
+  <InfoBox />
 {/if}
 
 <main>

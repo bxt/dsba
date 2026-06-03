@@ -15,7 +15,7 @@ test("close onboarding", async ({ page }) => {
   );
   await expect(onboarding).toBeVisible();
 
-  await page.getByRole("button", { name: "toggle infobox" }).click();
+  await page.getByRole("button", { name: "toggle info box" }).click();
 
   await expect(onboarding).not.toBeVisible();
 
@@ -23,7 +23,7 @@ test("close onboarding", async ({ page }) => {
 
   await expect(onboarding).not.toBeVisible();
 
-  await page.getByRole("button", { name: "toggle infobox" }).click();
+  await page.getByRole("button", { name: "toggle info box" }).click();
 
   await expect(onboarding).toBeVisible();
 });
