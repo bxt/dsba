@@ -13,6 +13,7 @@
     setActiveWallet,
   } from "$lib/persistence.svelte";
   import { resolve } from "$app/paths";
+  import Amount from "$lib/Amount.svelte";
 
   let { children } = $props();
 
@@ -68,37 +69,23 @@
     <div>Error!</div>
   {:else}
     <nav
-      class="wallet-navigation m-auto -mbs-8 flex w-full max-w-lg ps-22 pe-22"
+      class="wallet-navigation m-auto -mbs-8 flex w-full max-w-lg flex-wrap gap-1 ps-22 pe-22"
     >
-      <div class="relative">
-        <h2
-          class="border-s border-bs px-2 py-1"
-          aria-current={page.url.pathname === "/"}
+      {#each getWallets() as wallet (wallet.id)}
+        {@const isCurrent = wallet.id === getActiveWallet().id}
+        <button
+          class="flex-auto border px-2 py-1 aria-current:bg-gray-300"
+          onclick={() => setActiveWallet(wallet.id)}
+          role={isCurrent ? "heading" : "undefined"}
+          aria-current={isCurrent}
+          >{wallet.name}
+          {#if !isCurrent}<Amount value={wallet.balance} />{/if}</button
         >
-          {getActiveWallet().name}
-        </h2>
-        <ul class="wallet-dropdown absolute w-max">
-          {#each getWallets() as wallet (wallet.id)}
-            <li>
-              <button
-                onclick={() => setActiveWallet(wallet.id)}
-                aria-current={wallet.id === getActiveWallet().id}
-                >{wallet.name} ({wallet.balance})</button
-              >
-            </li>
-          {/each}
-        </ul>
-      </div>
-      <input
-        type="checkbox"
-        class="wallet-toggle-button w-8 border px-2 text-center"
-        aria-label="toggle list of wallets"
-      />
-
+      {/each}
       <a
         href={resolve("/add")}
         aria-current={page.url.pathname === "/add"}
-        class="border border-s-0 px-2 py-1 aria-current:bg-red-700">add</a
+        class="border px-2 py-1 aria-current:bg-red-700">add</a
       >
     </nav>
 
@@ -107,30 +94,3 @@
     </section>
   {/if}
 </main>
-
-<style>
-  .wallet-toggle-button {
-    appearance: none;
-    cursor: pointer;
-    font: inherit;
-    color: inherit;
-
-    &::after {
-      content: "v";
-    }
-
-    &:checked {
-      background: red;
-    }
-  }
-
-  .wallet-dropdown {
-    display: none;
-  }
-
-  .wallet-navigation:has(.wallet-toggle-button:checked) {
-    .wallet-dropdown {
-      display: block;
-    }
-  }
-</style>
