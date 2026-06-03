@@ -9,11 +9,30 @@ export type Expense = {
   date: string;
 };
 
+export const recurringFundingIntervals = [
+  "daily",
+  "weekly",
+  "monthly",
+  "yearly",
+];
+
+export type RecurringFundingInterval =
+  (typeof recurringFundingIntervals)[number];
+
+export type RecurringFunding = {
+  id: string;
+  amount: number;
+  interval: RecurringFundingInterval;
+  start: string;
+  processedUntil?: string;
+};
+
 export type Wallet = {
   id: string;
   balance: number;
   name: string;
   expenses: Expense[];
+  recurringFunding?: RecurringFunding[];
 };
 
 type Persistence = {

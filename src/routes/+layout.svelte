@@ -62,7 +62,7 @@
   <InfoBox />
 {/if}
 
-<main>
+<main class="mb-8">
   {#if isPersistenceLoading()}
     <div>Loading...</div>
   {:else if isPersistenceError()}
