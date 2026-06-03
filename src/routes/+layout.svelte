@@ -86,13 +86,6 @@
         aria-current={page.url.pathname === "/add"}
         class="border border-s-0 px-2 py-1 aria-current:bg-red-700">add</a
       >
-      <span class="flex grow justify-end">
-        <a
-          href={resolve("/edit")}
-          aria-current={page.url.pathname === "/edit"}
-          class=" border border-be-0 px-2 py-1 aria-current:bg-red-700">edit</a
-        >
-      </span>
     </nav>
 
     <section class="m-auto w-full max-w-lg">

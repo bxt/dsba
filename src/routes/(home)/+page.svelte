@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { resolve } from "$app/paths";
   import Amount from "$lib/Amount.svelte";
   import NumberInput from "$lib/NumberInput/NumberInput.svelte";
   import { getActiveWallet, addExpense } from "$lib/persistence.svelte";
@@ -9,10 +10,14 @@
 </script>
 
 <div
-  class="m-auto mt-10 flex w-2/3 items-baseline gap-2 border border-gray-300 py-5"
+  class="relative m-auto mt-10 flex w-2/3 items-baseline gap-2 border border-gray-300 py-5"
 >
   <Amount value={getActiveWallet().balance} class="flex-1 text-2xl" />
   <span class="flex-1 text-gray-500">current balance</span>
+  <a
+    href={resolve("/edit")}
+    class="absolute -top-2 -right-2 border bg-white px-2">edit</a
+  >
 </div>
 
 <form class="flex gap-2 py-3 pl-4">
