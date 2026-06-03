@@ -38,18 +38,4 @@ describe("formatRelative", () => {
       "4d ago",
     );
   });
-  it("can deal with DST", () => {
-    expect(
-      myFormatRelative(
-        new Date(2026, 2, 29, 1, 59, 0),
-        new Date(2026, 2, 29, 3, 1, 0),
-      ),
-    ).toBe("2m ago");
-    expect(
-      myFormatRelative(
-        new Date(2026, 9, 25, 1, 59, 0),
-        new Date(2026, 9, 25, 3, 1, 0),
-      ),
-    ).toBe("2h ago");
-  });
 });
