@@ -25,6 +25,8 @@
       isManuallyOpened = !isManuallyOpened;
     }
   }
+
+  const isOpen = $derived(!isOnboardingCompleted() || isManuallyOpened);
 </script>
 
 <svelte:head>
@@ -35,15 +37,27 @@
 <header class="flex justify-center">
   <div class="flex w-full max-w-lg justify-between p-2">
     <h1 class="rounded-lg border px-1 text-2xl" aria-label="DSBA">D$BA</h1>
-    <button
-      onclick={toggle}
-      aria-label="toggle info box"
-      class="size-8 rounded-full border">i</button
-    >
+    <div>
+      <button
+        onclick={toggle}
+        aria-label="toggle info box"
+        aria-current={isOpen}
+        class="size-8 rounded-full border aria-current:bg-red-700">i</button
+      >
+      <a
+        aria-label="settings"
+        href={page.url.pathname === "/settings"
+          ? resolve("/")
+          : resolve("/settings")}
+        aria-current={page.url.pathname === "/settings"}
+        class="inline-block size-8 rounded-full border text-center aria-current:bg-red-700"
+        >set</a
+      >
+    </div>
   </div>
 </header>
 
-{#if !isOnboardingCompleted() || isManuallyOpened}
+{#if isOpen}
   <InfoBox />
 {/if}
 
@@ -54,7 +68,7 @@
     <div>Error!</div>
   {:else}
     <nav
-      class="wallet-navigation m-auto -mbs-8 flex w-full max-w-lg ps-22 pe-12"
+      class="wallet-navigation m-auto -mbs-8 flex w-full max-w-lg ps-22 pe-22"
     >
       <div class="relative">
         <h2
