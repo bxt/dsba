@@ -40,7 +40,7 @@ function getPersistenceMaybe(): Persistence | undefined {
   return persistenceResult.data;
 }
 
-function getPersistence(): Persistence {
+export function getPersistence(): Persistence {
   if (persistenceResult.loading) throw new Error("still loading");
   if (persistenceResult.error) throw new Error("error loading");
   return persistenceResult.data;
