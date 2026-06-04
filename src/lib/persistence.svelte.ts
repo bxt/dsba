@@ -1,4 +1,5 @@
 import { SvelteDate } from "svelte/reactivity";
+import { generateRecurringExpenses } from "./generateRecurringExpenses";
 
 const localStorageKey = "DSBA-data";
 const localStorageCurrentVersion = 2;
@@ -7,6 +8,7 @@ export type Expense = {
   id: string;
   amount: number;
   date: string;
+  recurringFundingId?: string;
 };
 
 export const recurringFundingIntervals = [
@@ -14,7 +16,7 @@ export const recurringFundingIntervals = [
   "weekly",
   "monthly",
   "yearly",
-];
+] as const;
 
 export type RecurringFundingInterval =
   (typeof recurringFundingIntervals)[number];
@@ -24,7 +26,6 @@ export type RecurringFunding = {
   amount: number;
   interval: RecurringFundingInterval;
   start: string;
-  processedUntil?: string;
 };
 
 export type Wallet = {
@@ -65,6 +66,32 @@ export function getPersistence(): Persistence {
   return persistenceResult.data;
 }
 
+function applyRecurringExpenses(): void {
+  console.log("applyRecurringExpenses()");
+
+  const now = new SvelteDate();
+  for (const wallet of getWallets()) {
+    if (!wallet.recurringFunding) continue;
+
+    for (const recurringFunding of wallet.recurringFunding) {
+      const { expenses, balanceAdjustment, newStart } =
+        generateRecurringExpenses(now, recurringFunding);
+
+      console.log("generated expenses", expenses.length);
+
+      for (const expense of expenses) {
+        wallet.expenses.push(expense);
+      }
+      wallet.balance += balanceAdjustment;
+      recurringFunding.start = newStart;
+    }
+
+    wallet.expenses = wallet.expenses.sort((a, b) =>
+      a.date.localeCompare(b.date),
+    );
+  }
+}
+
 function loadPersistenceResult(): PersistenceResult {
   try {
     const rawContents = localStorage.getItem(localStorageKey);
@@ -95,6 +122,7 @@ function loadPersistenceResult(): PersistenceResult {
 
 $effect.root(() => {
   persistenceResult = loadPersistenceResult();
+  applyRecurringExpenses();
 });
 
 $effect.root(() => {
@@ -113,6 +141,10 @@ if (typeof window !== "undefined") {
   window.addEventListener("storage", (event) => {
     if (event.key !== localStorageKey) return;
     persistenceResult = loadPersistenceResult();
+  });
+
+  window.addEventListener("focus", function () {
+    applyRecurringExpenses();
   });
 }
 
@@ -157,24 +189,29 @@ export function setActiveWallet(id: string): void {
 export function editActiveWallet({
   name,
   balance,
+  recurringFunding,
 }: {
   name: string;
   balance: number;
+  recurringFunding?: RecurringFunding[];
 }): void {
   const wallet = findWallet(getPersistence().activeWallet);
   wallet.name = name;
   wallet.balance = balance;
+  wallet.recurringFunding = recurringFunding;
 }
 
 export function createNewAndActiveWallet({
   name,
   balance,
+  recurringFunding,
 }: {
   name: string;
   balance: number;
+  recurringFunding?: RecurringFunding[];
 }): void {
   const id = crypto.randomUUID();
-  const wallet: Wallet = { id, balance, name, expenses: [] };
+  const wallet: Wallet = { id, balance, name, recurringFunding, expenses: [] };
   getPersistence().wallets.push(wallet);
   getPersistence().activeWallet = wallet.id;
 }

@@ -14,6 +14,7 @@
   action={editActiveWallet}
   balance={getActiveWallet().balance}
   name={getActiveWallet().name}
+  recurringFunding={getActiveWallet().recurringFunding}
 >
   {#if isWalletDeletable()}
     <button

@@ -4,6 +4,15 @@
   import type { Snippet } from "svelte";
   import NumberInput from "$lib/NumberInput/NumberInput.svelte";
   import type { RecurringFunding } from "./persistence.svelte";
+  import { createNow } from "./createNow.svelte";
+
+  function dateToDatetimeLocal(date: string): string {
+    return date.substring(0, 16);
+  }
+
+  function datetimeLocalToDate(datetimeLocal: string): string {
+    return `${datetimeLocal}:00.000Z`;
+  }
 
   let {
     action,
@@ -23,19 +32,27 @@
     children?: Snippet;
   } = $props();
 
+  const now = createNow();
+  const nowFormatted = $derived(dateToDatetimeLocal(now.toISOString()));
+
+  const tenMinutesInMs = 10 * 60 * 1000;
+
   function addRecurringFunding(): void {
     recurringFunding ??= [];
     recurringFunding.push({
       id: crypto.randomUUID(),
       amount: 0,
       interval: "daily",
-      start: new Date().toISOString(),
+      start: new Date(Date.now() + tenMinutesInMs).toISOString(),
     });
   }
 
   function deleteRecurringFunding(fundingId: string): void {
     if (recurringFunding === undefined) return;
     recurringFunding = recurringFunding.filter(({ id }) => id !== fundingId);
+    if (recurringFunding.length === 0) {
+      recurringFunding = undefined;
+    }
   }
 </script>
 
@@ -49,7 +66,7 @@
     if (!name) throw new Error("name empty?");
     if (isNaN(balance)) throw new Error("balance empty?");
 
-    action({ name, balance });
+    action({ name, balance, recurringFunding });
     goto(resolve("/"));
   }}
 >
@@ -126,10 +143,14 @@
       </p>
       <p>
         <label>
-          <span class="text-gray-500">Starting at:</span>
+          <span class="text-gray-500">Starting at (UTC):</span>
           <input
             type="datetime-local"
-            bind:value={funding.start}
+            min={nowFormatted}
+            bind:value={
+              () => dateToDatetimeLocal(funding.start),
+              (v) => (funding.start = datetimeLocalToDate(v))
+            }
             class="block w-full rounded-lg border px-2"
           />
           <span class="invisible text-red-700 peer-has-aria-invalid:visible">

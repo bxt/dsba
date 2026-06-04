@@ -63,7 +63,12 @@
       <ul class="flex flex-col gap-1 border-b border-gray-300">
         {#each expenses as expense (expense.id)}
           <li transition:slide class="flex items-baseline gap-2">
-            <Amount value={expense.amount} class="flex-1 text-2xl" />
+            <span class="flex-1 text-right">
+              {#if expense.recurringFundingId}
+                <span aria-label="recurring">♻️</span>
+              {/if}
+              <Amount value={expense.amount} class="text-2xl" />
+            </span>
             <RelativeTime date={expense.date} class="flex-1 text-gray-500" />
           </li>
         {/each}
