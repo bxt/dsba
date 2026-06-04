@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SvelteDate } from "svelte/reactivity";
+  import { createNow } from "$lib/createNow.svelte";
   import { formatRelative } from "./formatRelative";
 
   const locale = "de";
@@ -17,15 +17,7 @@
   const { date, class: propsClass }: { date: string; class?: string } =
     $props();
 
-  let now = new SvelteDate();
-
-  $effect(() => {
-    const interval = setInterval(() => {
-      now.setTime(Date.now());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  });
+  const now = createNow();
 
   let short = $derived(formatShort(new Date(date), now));
   let long = $derived(
