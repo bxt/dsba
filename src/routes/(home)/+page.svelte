@@ -22,13 +22,14 @@
   <span class="flex-1 text-gray-500">current balance</span>
   <a
     href={resolve("/edit")}
-    class="absolute -top-2 -right-2 border bg-white px-2 font-serif">edit</a
+    class="absolute -top-2 -right-2 border bg-white px-2 font-serif uppercase"
+    >edit</a
   >
 </div>
 
 <form class="flex gap-2 py-3 pl-4">
   <label class="flex flex-1 items-center gap-1">
-    <span class="text-gray-500 font-serif">Amount:</span>
+    <span class="text-gray-500 font-serif uppercase">Amount:</span>
     <span class="flex flex-1 rounded-lg border px-2 text-2xl">
       <NumberInput
         class="w-0 flex-1 text-right"
@@ -46,7 +47,7 @@
         amount = NaN;
       }}
       disabled={isNaN(amount)}
-      class="rounded-lg border px-2 text-2xl disabled:bg-gray-300 font-serif"
+      class="rounded-lg border px-2 disabled:bg-gray-300 font-serif uppercase"
     >
       Subtract
     </button>
@@ -56,7 +57,7 @@
         amount = NaN;
       }}
       disabled={isNaN(amount)}
-      class="rounded-lg border px-2 disabled:bg-gray-300 font-serif"
+      class="rounded-lg border px-2 disabled:bg-gray-300 font-serif uppercase"
     >
       Add
     </button>

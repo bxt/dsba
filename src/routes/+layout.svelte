@@ -87,7 +87,8 @@
       <a
         href={resolve("/add")}
         aria-current={page.url.pathname === "/add"}
-        class="border px-2 py-1 aria-current:bg-red-700 font-serif">add</a
+        class="border px-2 py-1 aria-current:bg-red-700 font-serif uppercase"
+        >add</a
       >
     </nav>
 
