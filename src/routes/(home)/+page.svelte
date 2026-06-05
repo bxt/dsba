@@ -37,7 +37,7 @@
         bind:value={amount}
         placeholder="0.00"
       />
-      <span class=" text-gray-500">&thinsp;€</span>
+      <span class=" text-gray-500">&nbsp;€</span>
     </span>
   </label>
   <div class="flex flex-1 items-center gap-1">
