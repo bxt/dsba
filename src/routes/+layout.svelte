@@ -49,10 +49,10 @@
       >
       <a
         aria-label="settings"
-        href={page.url.pathname === "/settings"
+        href={page.url.pathname === resolve("/settings")
           ? resolve("/")
           : resolve("/settings")}
-        aria-current={page.url.pathname === "/settings"}
+        aria-current={page.url.pathname === resolve("/settings")}
         class="inline-block size-8 rounded-full border text-center aria-current:bg-red-700 font-serif"
         >set</a
       >
@@ -86,7 +86,7 @@
       {/each}
       <a
         href={resolve("/add")}
-        aria-current={page.url.pathname === "/add"}
+        aria-current={page.url.pathname === resolve("/add")}
         class="border px-2 py-1 aria-current:bg-red-700 font-serif uppercase"
         >add</a
       >
