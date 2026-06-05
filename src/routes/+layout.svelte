@@ -37,7 +37,9 @@
 
 <header class="flex justify-center">
   <div class="flex w-full max-w-lg justify-between p-2">
-    <h1 class="rounded-lg border px-1 text-2xl" aria-label="DSBA">D$BA</h1>
+    <h1 class="rounded-lg border px-1 text-2xl font-serif" aria-label="DSBA">
+      D$BA
+    </h1>
     <div>
       <button
         onclick={toggle}
@@ -51,7 +53,7 @@
           ? resolve("/")
           : resolve("/settings")}
         aria-current={page.url.pathname === "/settings"}
-        class="inline-block size-8 rounded-full border text-center aria-current:bg-red-700"
+        class="inline-block size-8 rounded-full border text-center aria-current:bg-red-700 font-serif"
         >set</a
       >
     </div>
@@ -85,7 +87,7 @@
       <a
         href={resolve("/add")}
         aria-current={page.url.pathname === "/add"}
-        class="border px-2 py-1 aria-current:bg-red-700">add</a
+        class="border px-2 py-1 aria-current:bg-red-700 font-serif">add</a
       >
     </nav>
 

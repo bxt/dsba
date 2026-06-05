@@ -1,1 +1,11 @@
+@import "@fontsource-variable/orbitron/wght.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
+
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "JetBrains Mono Variable", Menlo, Lucida Console, monospace;
+  --font-serif:
+    "Orbitron Variable", -apple-system, segoe ui, Helvetica Neue, Ubuntu,
+    roboto, helvetica, arial, sans-serif;
+}
