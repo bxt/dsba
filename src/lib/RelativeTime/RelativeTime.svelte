@@ -2,7 +2,7 @@
   import { createNow } from "$lib/createNow.svelte";
   import { formatRelative } from "./formatRelative";
 
-  const locale = "de";
+  const locale = "en";
 
   const dateTimeFormat = new Intl.DateTimeFormat(locale, {
     dateStyle: "full",
