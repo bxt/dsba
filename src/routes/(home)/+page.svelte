@@ -6,7 +6,7 @@
   import RelativeTime from "$lib/RelativeTime/RelativeTime.svelte";
   import { slide } from "svelte/transition";
 
-  let amount = $state(0);
+  let amount = $state(NaN);
 
   let expenseDays = $derived(
     Object.groupBy(getActiveWallet().expenses.toReversed(), ({ date }) =>
@@ -29,10 +29,13 @@
 <form class="flex gap-2 py-3 pl-4">
   <label class="flex flex-1 items-center gap-1">
     <span class="text-gray-500">Amount:</span>
-    <span
-      class="flex flex-1 rounded-lg border px-2 text-2xl has-aria-invalid:border-red-500"
-    >
-      <NumberInput class="w-0 flex-1 text-right" required bind:value={amount} />
+    <span class="flex flex-1 rounded-lg border px-2 text-2xl">
+      <NumberInput
+        class="w-0 flex-1 text-right"
+        required
+        bind:value={amount}
+        placeholder="e.g. 0.00"
+      />
       <span class=" text-gray-500">&thinsp;€</span>
     </span>
   </label>
@@ -40,6 +43,7 @@
     <button
       onclick={() => {
         addExpense(-amount);
+        amount = NaN;
       }}
       disabled={isNaN(amount)}
       class="rounded-lg border px-2 text-2xl disabled:bg-gray-300"
@@ -49,6 +53,7 @@
     <button
       onclick={() => {
         addExpense(amount);
+        amount = NaN;
       }}
       disabled={isNaN(amount)}
       class="rounded-lg border px-2 disabled:bg-gray-300"

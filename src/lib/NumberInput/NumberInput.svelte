@@ -10,6 +10,7 @@
     value = $bindable<number>(),
     class: propsClass = "",
     required,
+    placeholder,
   }: { value: number; class?: string } & Omit<
     HTMLInputAttributes,
     "type"
@@ -44,6 +45,7 @@
     value = stringToCents(cleanedValue);
   }}
   {required}
+  {placeholder}
   aria-invalid={initialValue === "" ? required : isNaN(value)}
   class={`text-right ${propsClass}`}
   inputmode="decimal"
