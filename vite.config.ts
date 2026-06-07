@@ -2,9 +2,32 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vitest/config";
 import { playwright } from "@vitest/browser-playwright";
 import { sveltekit } from "@sveltejs/kit/vite";
+import adapter from "@sveltejs/adapter-static";
+
+export const svelteCompilerOptions = {
+  // Force runes mode for the project, except for libraries. Can be removed in svelte 6.
+  runes: ({ filename }: { filename: string }) =>
+    filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
+};
+export const svelteConfigKit = {
+  adapter: adapter({
+    fallback: "404.html",
+  }),
+  paths: {
+    base: process.argv.includes("dev")
+      ? ("" as const)
+      : (process.env.BASE_PATH as `/${string}`),
+  },
+};
 
 export default defineConfig({
-  plugins: [tailwindcss(), sveltekit()],
+  plugins: [
+    tailwindcss(),
+    sveltekit({
+      compilerOptions: svelteCompilerOptions,
+      ...svelteConfigKit,
+    }),
+  ],
   test: {
     expect: { requireAssertions: true },
     projects: [
